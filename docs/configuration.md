@@ -9,11 +9,11 @@
     'value' => array(
         'tools' => array(
             'twig' => array(
-                // Режим отладки выключен
+                //Режим отладки выключен
                 'debug' => false,
     
-                //Кодировка соответствует кодировке продукта
-                'charset' => SITE_CHARSET,
+                //Кодировка продукта
+                'charset' => 'UTF-8',
     
                 //кеш хранится в уникальной директории. Должен быть полный абсолютный путь
                 'cache' => $_SERVER['DOCUMENT_ROOT'] . '/bitrix/cache/maximaster/tools.twig',
