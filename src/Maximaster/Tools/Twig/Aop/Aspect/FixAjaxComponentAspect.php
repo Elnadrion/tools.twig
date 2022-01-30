@@ -2,11 +2,11 @@
 
 namespace Maximaster\Tools\Twig\Aop\Aspect;
 
+use CAjax;
+use CComponentAjax;
 use Go\Aop\Aspect;
 use Go\Aop\Intercept\MethodInvocation;
 use Go\Lang\Annotation\Around;
-use CComponentAjax;
-use CAjax;
 
 class FixAjaxComponentAspect implements Aspect
 {
@@ -21,9 +21,7 @@ class FixAjaxComponentAspect implements Aspect
             return $result;
         }
 
-        /**
-         * @var CComponentAjax $component
-         */
+        /** @var CComponentAjax $component */
         $component = $invocation->getThis();
 
         $component->componentID = $this->getComponentId($component->componentName, $component->componentTemplate, $component->arParams['AJAX_OPTION_ADDITIONAL']);
@@ -32,15 +30,11 @@ class FixAjaxComponentAspect implements Aspect
             return false;
         }
 
-        if ($current_session = CAjax::GetSession())
-        {
-            if ($component->componentID == $current_session)
-            {
+        if ($current_session = CAjax::GetSession()) {
+            if ($component->componentID == $current_session) {
                 $component->bAjaxSession = true;
                 return true;
-            }
-            else
-            {
+            } else {
                 return false;
             }
         }
@@ -62,12 +56,12 @@ class FixAjaxComponentAspect implements Aspect
             return false;
         }
 
-        return md5(implode('|', array(
+        return md5(implode('|', [
             $foundTrace['file'],
             $foundTrace['line'],
             $componentName,
             $componentTemplate ? strlen($componentName) : '.default',
-            $additionalID
-        )));
+            $additionalID,
+        ]));
     }
 }

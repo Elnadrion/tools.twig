@@ -13,6 +13,6 @@ class AspectKernel extends \Go\Core\AspectKernel
 {
     protected function configureAop(AspectContainer $container)
     {
-        $container->registerAspect(new FixAjaxComponentAspect);
+        $container->registerAspect(new FixAjaxComponentAspect());
     }
 }

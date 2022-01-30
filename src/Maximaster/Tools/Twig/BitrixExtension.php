@@ -36,7 +36,6 @@ class BitrixExtension extends TwigAbstractExtension implements TwigGlobalsInterf
         }
 
         return $coreVariables;
-
     }
 
     private function isD7()
@@ -53,15 +52,15 @@ class BitrixExtension extends TwigAbstractExtension implements TwigGlobalsInterf
      */
     public function getFunctions()
     {
-        return array(
+        return [
             new TwigFunction('showError', 'ShowError'),
             new TwigFunction('showMessage', 'ShowMessage'),
             new TwigFunction('showNote', 'ShowNote'),
             new TwigFunction('bitrix_sessid_post', 'bitrix_sessid_post'),
             new TwigFunction('bitrix_sessid_get', 'bitrix_sessid_get'),
             new TwigFunction('getMessage', $this->isD7() ? '\\Bitrix\\Main\\Localization\\Loc::getMessage' : 'GetMessage'),
-            new TwigFunction('showComponent', array(__CLASS__, 'showComponent')),
-        );
+            new TwigFunction('showComponent', [__CLASS__, 'showComponent']),
+        ];
     }
 
     /**
@@ -71,7 +70,7 @@ class BitrixExtension extends TwigAbstractExtension implements TwigGlobalsInterf
      * @param \CBitrixComponent $parentComponent
      * @param array $arFunctionParams
      */
-    public static function showComponent($componentName, $componentTemplate, $arParams = array(), $parentComponent = null, $arFunctionParams = array())
+    public static function showComponent($componentName, $componentTemplate, $arParams = [], $parentComponent = null, $arFunctionParams = [])
     {
         global $APPLICATION;
         $APPLICATION->IncludeComponent($componentName, $componentTemplate, $arParams, $parentComponent, $arFunctionParams);

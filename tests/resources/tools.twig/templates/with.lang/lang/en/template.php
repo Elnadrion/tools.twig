@@ -1,1 +1,3 @@
-<?php include __DIR__.'/../ru/template.php';
+<?php
+
+include __DIR__ . '/../ru/template.php';

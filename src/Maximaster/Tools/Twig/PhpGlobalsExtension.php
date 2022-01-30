@@ -19,7 +19,7 @@ class PhpGlobalsExtension extends TwigAbstractExtension implements TwigGlobalsIn
 
     public function getGlobals(): array
     {
-        return array(
+        return [
             '_SERVER'       => $_SERVER,
             '_REQUEST'      => $_REQUEST,
             '_GET'          => $_GET,
@@ -28,6 +28,6 @@ class PhpGlobalsExtension extends TwigAbstractExtension implements TwigGlobalsIn
             '_SESSION'      => $_SESSION,
             '_COOKIE'       => $_COOKIE,
             '_GLOBALS'      => $GLOBALS,
-        );
+        ];
     }
 }

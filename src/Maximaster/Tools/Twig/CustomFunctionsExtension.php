@@ -3,8 +3,8 @@
 namespace Maximaster\Tools\Twig;
 
 use Twig\Extension\AbstractExtension as TwigAbstractExtension;
-use Twig\TwigFunction;
 use Twig\Extension\GlobalsInterface as TwigGlobalsInterface;
+use Twig\TwigFunction;
 
 class CustomFunctionsExtension extends TwigAbstractExtension implements TwigGlobalsInterface
 {
@@ -15,14 +15,14 @@ class CustomFunctionsExtension extends TwigAbstractExtension implements TwigGlob
 
     public function getGlobals(): array
     {
-        return array();
+        return [];
     }
 
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('russianPluralForm', array($this, 'russianPluralForm')),
-        );
+        return [
+            new TwigFunction('russianPluralForm', [$this, 'russianPluralForm']),
+        ];
     }
 
     /**

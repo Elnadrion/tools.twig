@@ -2,10 +2,10 @@
 
 namespace Maximaster\Tools\Twig;
 
-use Twig\Template;
 use Twig\Error\LoaderError as TwigLoaderError;
 use Twig\Loader\FilesystemLoader as TwigFilesystemLoader;
 use Twig\Loader\LoaderInterface as TwigLoaderInterface;
+use Twig\Template;
 
 /**
  * Class BitrixLoader. Класс загрузчик файлов шаблонов. Понимает специализированный синтаксис
@@ -14,9 +14,9 @@ use Twig\Loader\LoaderInterface as TwigLoaderInterface;
 class BitrixLoader extends TwigFilesystemLoader implements TwigLoaderInterface
 {
     /** @var array Статическое хранилище для уже отрезолвленных путей для ускорения */
-    private static $resolved = array();
+    private static $resolved = [];
     /** @var array Статическое хранилище нормализованных имен шаблонов для ускорения */
-    private static $normalized = array();
+    private static $normalized = [];
 
     /**
      * {@inheritdoc}
@@ -75,7 +75,7 @@ class BitrixLoader extends TwigFilesystemLoader implements TwigLoaderInterface
         if (strpos($name, ':') !== false) {
             $resolved = $this->getComponentTemplatePath($name);
         } elseif (($firstChar = substr($name, 0, 1)) === DIRECTORY_SEPARATOR) {
-            $resolved = is_file($name) ? $name : $_SERVER['DOCUMENT_ROOT'].$name;
+            $resolved = is_file($name) ? $name : $_SERVER['DOCUMENT_ROOT'] . $name;
         }
 
         if (!file_exists($resolved)) {
@@ -134,8 +134,8 @@ class BitrixLoader extends TwigFilesystemLoader implements TwigLoaderInterface
 
         $obTemplate = new \CBitrixComponentTemplate();
         $obTemplate->Init($component);
-        $templatePath = $_SERVER['DOCUMENT_ROOT'].(
-            $isRelative ? ($obTemplate->GetFolder().DIRECTORY_SEPARATOR.$page) : $obTemplate->GetFile()
+        $templatePath = $_SERVER['DOCUMENT_ROOT'] . (
+            $isRelative ? ($obTemplate->GetFolder() . DIRECTORY_SEPARATOR . $page) : $obTemplate->GetFile()
         );
 
         return $templatePath;
@@ -202,12 +202,12 @@ class BitrixLoader extends TwigFilesystemLoader implements TwigLoaderInterface
         } else {
             $lastRendered = $this->getLastRenderedTemplate();
             if ($lastRendered) {
-                $normalizedName = dirname($lastRendered).'/'.$name;
+                $normalizedName = dirname($lastRendered) . '/' . $name;
             } else {
                 $normalizedName = $name;
             }
         }
 
-        return (static::$normalized[ $name ] = $normalizedName);
+        return static::$normalized[ $name ] = $normalizedName;
     }
 }
