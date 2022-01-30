@@ -4,11 +4,11 @@ namespace Maximaster\Tools\Twig;
 
 use Bitrix\Main\Event;
 use Bitrix\Main\EventResult;
+use Bitrix\Main\Localization\Loc;
 use CBitrixComponentTemplate;
 use Twig\Environment as TwigEnvironment;
-use Twig\Extension\DebugExtension as TwigDebugExtension;
 use Twig\Error\Error as TwigError;
-use Bitrix\Main\Localization\Loc;
+use Twig\Extension\DebugExtension as TwigDebugExtension;
 
 /**
  * Class TemplateEngine. Небольшой синглтон, который позволяет в процессе работы страницы несколько раз обращаться к
@@ -84,7 +84,7 @@ class TemplateEngine
     private function generateInitEvent()
     {
         $eventName = 'onAfterTwigTemplateEngineInited';
-        $event = new Event('', $eventName, array('engine' => $this->engine));
+        $event = new Event('', $eventName, ['engine' => $this->engine]);
         $event->send();
         if ($event->getResults()) {
             foreach ($event->getResults() as $evenResult) {
@@ -92,7 +92,7 @@ class TemplateEngine
                     $twig = current($evenResult->getParameters());
                     if (!($twig instanceof TwigEnvironment)) {
                         throw new \LogicException(
-                            "Событие '{$eventName}' должно возвращать экземпляр класса ".
+                            "Событие '{$eventName}' должно возвращать экземпляр класса " .
                             "'\\TwigEnvironment' при успешной отработке"
                         );
                     }
@@ -105,7 +105,7 @@ class TemplateEngine
 
     public static function getInstance()
     {
-        return self::$instance ?: (self::$instance = new self);
+        return self::$instance ?: (self::$instance = new self());
     }
 
     /**
@@ -122,7 +122,8 @@ class TemplateEngine
      * @throws Twig\Error\Error
      */
     public static function render(
-        /** @noinspection PhpUnusedParameterInspection */ $templateFile,
+        /** @noinspection PhpUnusedParameterInspection */ 
+        $templateFile,
         $arResult,
         $arParams,
         $arLangMessages,
@@ -150,9 +151,9 @@ class TemplateEngine
 
         if ($options['extract_result']) {
             $context = $arResult;
-            $context['result'] =& $arResult;
+            $context['result'] =&$arResult;
         } else {
-            $context = array('result' => $arResult);
+            $context = ['result' => $arResult];
         }
 
         // Битрикс не умеет "лениво" грузить языковые сообщения если они запрашиваются из twig, т.к. ищет вызов
@@ -160,7 +161,7 @@ class TemplateEngine
         // Кроме того, Битрикс ждёт такое же имя файла, внутри lang-папки. Т.е. например template.twig
         // Но сам includ'ит их, что в случае twig файла конечно никак не сработает. Поэтому подменяем имя
         $templateMess = Loc::loadLanguageFile(
-            $_SERVER['DOCUMENT_ROOT'].preg_replace('/[.]twig$/', '.php', $template->GetFile())
+            $_SERVER['DOCUMENT_ROOT'] . preg_replace('/[.]twig$/', '.php', $template->GetFile())
         );
 
         // Это не обязательно делать если не используется lang, т.к. Битрикс загруженные фразы все равно запомнил
@@ -169,7 +170,7 @@ class TemplateEngine
             $arLangMessages = array_merge($arLangMessages, $templateMess);
         }
 
-        $context = array(
+        $context = [
             'params' => $arParams,
             'lang' => $arLangMessages,
             'template' => $template,
@@ -177,20 +178,20 @@ class TemplateEngine
             'templateFolder' => $templateFolder,
             'parentTemplateFolder' => $parentTemplateFolder,
             'render' => compact('templateName', 'engine'),
-        ) + $context;
+        ] + $context;
 
         echo self::getInstance()->getEngine()->render($templateName, $context);
 
         $component_epilog = $templateFolder . '/component_epilog.php';
         if (file_exists($_SERVER['DOCUMENT_ROOT'] . $component_epilog)) {
             /** @var \CBitrixComponent $component */
-            $component->SetTemplateEpilog(array(
+            $component->SetTemplateEpilog([
                 'epilogFile' => $component_epilog,
                 'templateName' => $template->__name,
                 'templateFile' => $template->__file,
                 'templateFolder' => $template->__folder,
                 'templateData' => false,
-            ));
+            ]);
         }
     }
 
@@ -200,7 +201,7 @@ class TemplateEngine
      * @param array $context Контекст
      * @return string Результат рендера
      */
-    public static function renderStandalone($src, $context = array())
+    public static function renderStandalone($src, $context = [])
     {
         return self::getInstance()->getEngine()->render($src, $context);
     }
@@ -210,7 +211,7 @@ class TemplateEngine
      * @param string $src
      * @param array $context
      */
-    public static function displayStandalone($src, $context = array())
+    public static function displayStandalone($src, $context = [])
     {
         echo self::renderStandalone($src, $context);
     }

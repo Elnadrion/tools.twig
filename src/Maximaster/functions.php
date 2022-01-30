@@ -1,9 +1,9 @@
 <?php
 
-use Maximaster\Tools\Twig\TemplateEngine;
 use Maximaster\Tools\Twig\Aop\AspectKernel;
-use Twig\Error\LoaderError as TwigLoaderError;
+use Maximaster\Tools\Twig\TemplateEngine;
 use Maximaster\Tools\Twig\TwigOptionsStorage;
+use Twig\Error\LoaderError as TwigLoaderError;
 
 if (!function_exists('maximasterRenderTwigTemplate')) {
     function maximasterRenderTwigTemplate(
@@ -13,7 +13,8 @@ if (!function_exists('maximasterRenderTwigTemplate')) {
         $arLangMessages,
         $templateFolder,
         $parentTemplateFolder,
-        \CBitrixComponentTemplate $template): void
+        \CBitrixComponentTemplate $template
+    ): void
     {
         TemplateEngine::render(
             $templateFile,
@@ -38,7 +39,7 @@ if (!function_exists('maximasterRenderTwigTemplate')) {
         $arCustomTemplateEngines['twig'] = [
             'templateExt' => ['twig'],
             'function' => 'maximasterRenderTwigTemplate',
-            'sort' => $options->getUsedByDefault() ? 1 : 500
+            'sort' => $options->getUsedByDefault() ? 1 : 500,
         ];
     }
 

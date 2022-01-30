@@ -31,8 +31,7 @@ class TwigCacheCleaner
 
     private function checkCacheEngine()
     {
-        if (!$this->isFileCache())
-        {
+        if (!$this->isFileCache()) {
             throw new \LogicException('Невозможно очистить кеш. Он либо хранится не в файлах, либо кеш отсутствует полностью');
         }
     }
@@ -47,29 +46,23 @@ class TwigCacheCleaner
     public function clearByName($name)
     {
         if (strlen($name) === 0) {
-
             throw new ArgumentException("Имя шаблона не задано");
-
         }
 
         $counter = 0;
 
         $templateClass = $this->engine->getTemplateClass($name);
-        if (strlen($name) === 0)
-        {
+        if (strlen($name) === 0) {
             throw new ArgumentException("Шаблон с именем '{$name}' не найден");
         }
 
         $fileName = $this->engine->getCache(false)->generateKey($name, $templateClass);
 
         if (is_file($fileName)) {
-
             @unlink($fileName);
 
             if (is_file($fileName)) {
-
                 throw new \LogicException("Шаблон '{$name}'.\nПроизошла ошибка в процессе удаления файла:\n$fileName");
-
             }
 
             $counter++;
@@ -96,19 +89,14 @@ class TwigCacheCleaner
         );
 
         foreach ($iterator as $file) {
-
             if ($file->isFile()) {
-
                 @unlink($file->getPathname());
-                if (!is_file($file->getPathname()))
-                {
+                if (!is_file($file->getPathname())) {
                     $counter++;
                 }
-
             }
         }
 
         return $counter;
-
     }
 }
