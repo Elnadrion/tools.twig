@@ -13,7 +13,7 @@ if (!function_exists('maximasterRenderTwigTemplate')) {
         $arLangMessages,
         $templateFolder,
         $parentTemplateFolder,
-        \CBitrixComponentTemplate $template)
+        \CBitrixComponentTemplate $template): void
     {
         TemplateEngine::render(
             $templateFile,
@@ -26,26 +26,30 @@ if (!function_exists('maximasterRenderTwigTemplate')) {
         );
     }
 
-    function maximasterRegisterTwigTemplateEngine()
+    function maximasterRegisterTwigTemplateEngine(): void
     {
+        if (!class_exists('CMain')) {
+            return;
+        }
+
         $options = new TwigOptionsStorage();
 
         global $arCustomTemplateEngines;
-        $arCustomTemplateEngines['twig'] = array(
-            'templateExt' => array('twig'),
+        $arCustomTemplateEngines['twig'] = [
+            'templateExt' => ['twig'],
             'function' => 'maximasterRenderTwigTemplate',
             'sort' => $options->getUsedByDefault() ? 1 : 500
-        );
+        ];
     }
 
     maximasterRegisterTwigTemplateEngine();
 
-    if (class_exists('\Go\Core\AspectKernel', true) && class_exists('CMain')) {
+    if (class_exists('\Go\Core\AspectKernel') && class_exists('CMain')) {
         $aspectKernel = AspectKernel::getInstance();
-        $aspectKernel->init(array(
+        $aspectKernel->init([
             'appDir' => $_SERVER['DOCUMENT_ROOT'],
             'cacheDir' => TemplateEngine::getInstance()->getOptions()->getCache(),
-        ));
+        ]);
     }
 } else {
     throw new TwigLoaderError('Необходимо, чтобы функция с именем maximasterRenderTwigTemplate не была определена');
