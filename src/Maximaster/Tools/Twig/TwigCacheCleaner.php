@@ -71,7 +71,6 @@ class TwigCacheCleaner
         return $counter;
     }
 
-
     /**
      * Удаляет весь кеш твига
      *
