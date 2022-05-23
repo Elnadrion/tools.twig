@@ -122,7 +122,7 @@ class TemplateEngine
      * @throws Twig\Error\Error
      */
     public static function render(
-        /** @noinspection PhpUnusedParameterInspection */ 
+        /** @noinspection PhpUnusedParameterInspection */
         $templateFile,
         $arResult,
         $arParams,

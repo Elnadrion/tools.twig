@@ -14,8 +14,7 @@ if (!function_exists('maximasterRenderTwigTemplate')) {
         $templateFolder,
         $parentTemplateFolder,
         \CBitrixComponentTemplate $template
-    ): void
-    {
+    ): void {
         TemplateEngine::render(
             $templateFile,
             $arResult,
