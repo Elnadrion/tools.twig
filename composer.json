@@ -33,7 +33,8 @@
   },
   "require-dev": {
     "phpunit/phpunit": "^5.7",
-    "goaop/framework": "dev-autoload_unregister_bugfix"
+    "goaop/framework": "dev-autoload_unregister_bugfix",
+    "symplify/easy-coding-standard": "^11.0"
   },
   "repositories": [
     {
