@@ -1,11 +1,10 @@
 {
-  "name": "maximaster/tools.twig",
+  "name": "elnadrion/tools.twig",
   "description": "Модуль подключения шаблонизатора twig к битриксу",
-  "keywords": ["bitrix", "1С Битрикс", "максимастер", "twig", "шаблонизатор"],
+  "keywords": ["bitrix", "1С Битрикс", "twig", "шаблонизатор"],
   "license": "MIT",
   "support": {
-    "www": "http://www.maximaster.ru",
-    "source": "https://github.com/maximaster/tools.twig.git"
+    "source": "https://github.com/Elnadrion/tools.twig.git"
   },
   "authors": [
     {
@@ -15,6 +14,10 @@
     {
       "name": "Лавриненко Максим",
       "email": "maxim.lavrinenko@maximaster.ru"
+    },
+    {
+      "name": "Elnadrion",
+      "email": "elnadrion.dev@yandex.ru"
     }
   ],
   "require": {
