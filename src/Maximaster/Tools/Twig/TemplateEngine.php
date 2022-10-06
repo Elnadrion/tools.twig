@@ -131,7 +131,7 @@ class TemplateEngine
         $parentTemplateFolder,
         CBitrixComponentTemplate $template
     ) {
-        if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) {
+        if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
             throw new TwigError('Пролог не подключен');
         }
 
@@ -151,7 +151,7 @@ class TemplateEngine
 
         if ($options['extract_result']) {
             $context = $arResult;
-            $context['result'] =&$arResult;
+            $context['result'] = &$arResult;
         } else {
             $context = ['result' => $arResult];
         }

@@ -26,8 +26,8 @@ class BitrixExtension extends TwigAbstractExtension implements TwigGlobalsInterf
         global $APPLICATION, $USER;
 
         $coreVariables = [
-            'APPLICATION'        => $APPLICATION,
-            'USER'               => $USER,
+            'APPLICATION' => $APPLICATION,
+            'USER' => $USER,
             'SITE_TEMPLATE_PATH' => SITE_TEMPLATE_PATH,
         ];
 
