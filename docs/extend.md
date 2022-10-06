@@ -5,31 +5,29 @@
 Пример обработчика события, который зарегистрирует свое расширение:
 
 ```php
-
 use Bitrix\Main\EventResult;
 use Twig\Environment;
 
-AddEventHandler('', 'onAfterTwigTemplateEngineInited', array('EventClass', 'addTwigExtension'));
+AddEventHandler('', 'onAfterTwigTemplateEngineInited', ['EventClass', 'addTwigExtension']);
 
 class EventClass
 {
     public static function addTwigExtension(Environment $engine): EventResult
     {
         $engine->addExtension(new MySuperDuperExtension());
-        return new EventResult(EventResult::SUCCESS, array($engine));
+        return new EventResult(EventResult::SUCCESS, [$engine];
     }
 }
 ```
 Пример на D7:
 ```php
-
 use Bitrix\Main\Event;
 use Bitrix\Main\EventResult;
 use Bitrix\Main\EventManager;
 use Twig\Environment;
 
 $eventManager = EventManager::getInstance();
-$eventManager->addEventHandler('', 'onAfterTwigTemplateEngineInited', array('EventClass', 'addTwigExtension'));
+$eventManager->addEventHandler('', 'onAfterTwigTemplateEngineInited', ['EventClass', 'addTwigExtension']);
 
 class EventClass
 {
@@ -38,7 +36,7 @@ class EventClass
         /* @var Environment $engine */
         $engine = $event->getParameter('engine');
         $engine->addExtension(new MySuperDuperExtension());
-        return new EventResult(EventResult::SUCCESS, array($engine));
+        return new EventResult(EventResult::SUCCESS, [$engine]);
     }
 }
 ```
