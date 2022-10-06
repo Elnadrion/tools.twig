@@ -25,8 +25,8 @@ class DDExtension extends TwigAbstractExtension implements TwigGlobalsInterface
         ];
     }
 
-    public static function dd($data): string
+    public static function dd($data): void
     {
-        return dd($data);
+        dd($data);
     }
 }

@@ -25,8 +25,8 @@ class DumpExtension extends TwigAbstractExtension implements TwigGlobalsInterfac
         ];
     }
 
-    public static function dump($data): string
+    public static function dump($data): void
     {
-        return dump($data);
+        dump($data);
     }
 }
