@@ -1,31 +1,11 @@
-# maximaster/tools.twig
-
-Библиотека наследница [lozunoff/tools.twig](https://github.com/lozunoff/tools.twig) и [maximaster/tools.twig](https://github.com/maximaster/tools.twig). Подключен Twig версии 3.X. Минимальная версия PHP поднята до >=7.2.5. Можно использовать с Bitrix версии >=20.5.393, т.к. данные версии не ругаются на mbstring.func_overload = 0.
+# Шаблонизатор twig для 1С-Битрикс
 
 Данная библиотека позволяет использовать twig шаблоны в 1С Битрикс для компонентов 2.0. Обрабатываются файлы шаблонов, имеющие расширение `.twig`. Если создать в директории шаблона компонента файл `template.twig`, то именно он будет использоваться при генерации шаблона.
 
-Для установки форкнутой версии через composer необходимо добавить в composer.json:
-
-```
-...
-"repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/Elnadrion/tools.twig"
-        }
-    ],
-    "require": {
-        ...
-        "maximaster/tools.twig": "dev-master",
-        ...
-    },
-...
-```
-
-и выполнить
-
-```
-composer update
+## Установка
+Вы можете установить пакет через composer:
+```bash
+composer require elnadrion/tools.twig
 ```
 
 ## Простой пример
@@ -36,6 +16,12 @@ composer update
 {% extends "bitrix:news.detail:new_year" %}
 ```
 После чего можно будет переопределить все блоки, которые есть в родительском шаблоне. Подробнее о [синтаксисе](docs/syntax.md) - в документации
+
+## Требования
+
+* Битрикс: >=20.5.393
+* PHP: >=7.2.5
+* mbstring.func_overload: 0
 
 ## Документация 
 
