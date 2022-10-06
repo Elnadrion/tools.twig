@@ -1,6 +1,6 @@
 <?php
 
-namespace Maximaster\Tools\Twig;
+namespace Maximaster\Tools\Twig\Extensions;
 
 use Bitrix\Main\Application;
 use Twig\Extension\AbstractExtension as TwigAbstractExtension;
