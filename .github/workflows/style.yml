@@ -1,0 +1,36 @@
+---
+name: Check code style
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  ecs-check:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php_version: [ '7.4' ]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php_version }}
+          ini-values: short_open_tag=On
+          coverage: none
+
+      - name: install dependencies
+        run: composer install
+
+      - name: check code style
+        run: php vendor/bin/ecs check
