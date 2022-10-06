@@ -46,7 +46,7 @@ class TwigCacheCleaner
     public function clearByName($name)
     {
         if (strlen($name) === 0) {
-            throw new ArgumentException("Имя шаблона не задано");
+            throw new ArgumentException('Имя шаблона не задано');
         }
 
         $counter = 0;

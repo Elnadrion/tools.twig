@@ -20,14 +20,14 @@ class PhpGlobalsExtension extends TwigAbstractExtension implements TwigGlobalsIn
     public function getGlobals(): array
     {
         return [
-            '_SERVER'       => $_SERVER,
-            '_REQUEST'      => $_REQUEST,
-            '_GET'          => $_GET,
-            '_POST'         => $_POST,
-            '_FILES'        => $_FILES,
-            '_SESSION'      => $_SESSION,
-            '_COOKIE'       => $_COOKIE,
-            '_GLOBALS'      => $GLOBALS,
+            '_SERVER' => $_SERVER,
+            '_REQUEST' => $_REQUEST,
+            '_GET' => $_GET,
+            '_POST' => $_POST,
+            '_FILES' => $_FILES,
+            '_SESSION' => $_SESSION,
+            '_COOKIE' => $_COOKIE,
+            '_GLOBALS' => $GLOBALS,
         ];
     }
 }
