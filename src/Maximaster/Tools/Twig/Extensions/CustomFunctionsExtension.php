@@ -1,6 +1,6 @@
 <?php
 
-namespace Maximaster\Tools\Twig;
+namespace Maximaster\Tools\Twig\Extensions;
 
 use Twig\Extension\AbstractExtension as TwigAbstractExtension;
 use Twig\Extension\GlobalsInterface as TwigGlobalsInterface;
@@ -41,20 +41,14 @@ class CustomFunctionsExtension extends TwigAbstractExtension implements TwigGlob
             return $input[0];
         } else {
             switch ($l1) {
-                case 0:
-                    return $input[0];
-                    break;
                 case 1:
                     return $input[1];
-                    break;
                 case 2:
                 case 3:
                 case 4:
                     return $input[2];
-                    break;
                 default:
                     return $input[0];
-                    break;
             }
         }
     }

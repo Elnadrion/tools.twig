@@ -8,7 +8,6 @@ use Bitrix\Main\Localization\Loc;
 use CBitrixComponentTemplate;
 use Twig\Environment as TwigEnvironment;
 use Twig\Error\Error as TwigError;
-use Twig\Extension\DebugExtension as TwigDebugExtension;
 
 /**
  * Class TemplateEngine. Небольшой синглтон, который позволяет в процессе работы страницы несколько раз обращаться к
@@ -69,13 +68,11 @@ class TemplateEngine
      */
     private function initExtensions()
     {
-        if ($this->engine->isDebug()) {
-            $this->engine->addExtension(new TwigDebugExtension());
-        }
-
-        $this->engine->addExtension(new BitrixExtension());
-        $this->engine->addExtension(new PhpGlobalsExtension());
-        $this->engine->addExtension(new CustomFunctionsExtension());
+        $this->engine->addExtension(new Extensions\BitrixExtension());
+        $this->engine->addExtension(new Extensions\PhpGlobalsExtension());
+        $this->engine->addExtension(new Extensions\CustomFunctionsExtension());
+        $this->engine->addExtension(new Extensions\DDExtension());
+        $this->engine->addExtension(new Extensions\DumpExtension());
     }
 
     /**
