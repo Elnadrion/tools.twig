@@ -3,12 +3,11 @@
 Библиотека конфигурируется с помощью файла /bitrix/.settings.php (или /bitrix/.settings_extra.php). Нужно завести в этом файле опцию maximaster, и оперировать значением tools->twig. Ниже описаны значения опций, которые заданы библиотекой по-умолчанию:
 
 ```php
-
 //...
-'maximaster' => array(
-    'value' => array(
-        'tools' => array(
-            'twig' => array(
+'maximaster' => [
+    'value' => [
+        'tools' => [
+            'twig' => [
                 //Режим отладки выключен
                 'debug' => false,
     
@@ -29,11 +28,10 @@
                 
                 //Подключать шаблоны .twig в приоритете над шаблонами .php
                 'use_by_default' => false
-            )
-        )
-    )
-)
+            ]
+        ]
+    ]
+]
 //...
-
 ```
 При выборе значений для конфигов нужно опираться на [документацию twig по настройкам Twig_Environment](http://twig.sensiolabs.org/doc/api.html#environment-options). Поддерживаются все возможные согласно этой документации опции
