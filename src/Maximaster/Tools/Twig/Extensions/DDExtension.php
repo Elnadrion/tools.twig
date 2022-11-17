@@ -8,7 +8,7 @@ use Twig\TwigFunction;
 
 class DDExtension extends TwigAbstractExtension implements TwigGlobalsInterface
 {
-    public function getName()
+    public function getName(): string
     {
         return 'elnadrion_twig_dd_extension';
     }

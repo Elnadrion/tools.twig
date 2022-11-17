@@ -70,7 +70,7 @@ class TemplateEngine
     {
         $this->engine->addExtension(new Extensions\BitrixExtension());
         $this->engine->addExtension(new Extensions\PhpGlobalsExtension());
-        $this->engine->addExtension(new Extensions\CustomFunctionsExtension());
+        $this->engine->addExtension(new Extensions\PluralFormExtension());
         $this->engine->addExtension(new Extensions\DDExtension());
         $this->engine->addExtension(new Extensions\DumpExtension());
     }

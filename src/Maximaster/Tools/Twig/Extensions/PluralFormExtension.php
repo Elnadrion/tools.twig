@@ -6,9 +6,9 @@ use Twig\Extension\AbstractExtension as TwigAbstractExtension;
 use Twig\Extension\GlobalsInterface as TwigGlobalsInterface;
 use Twig\TwigFunction;
 
-class CustomFunctionsExtension extends TwigAbstractExtension implements TwigGlobalsInterface
+class PluralFormExtension extends TwigAbstractExtension implements TwigGlobalsInterface
 {
-    public function getName()
+    public function getName(): string
     {
         return 'maximaster_functions_extension';
     }
@@ -18,7 +18,7 @@ class CustomFunctionsExtension extends TwigAbstractExtension implements TwigGlob
         return [];
     }
 
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('russianPluralForm', [$this, 'russianPluralForm']),
@@ -28,15 +28,15 @@ class CustomFunctionsExtension extends TwigAbstractExtension implements TwigGlob
     /**
      * Выводит правильный вариант множественной формы числа
      *
-     * @param int $howmuch Число, для которого нужно сформировать множественную форму (число будет приведено к целому)
+     * @param int|float $count Число, для которого нужно сформировать множественную форму (число будет приведено к целому)
      * @param string[] $input Массив, содержащий 3 слова ['билетов', 'билет', 'билета'] (Ноль билетов, Один билет, Два билета)
      * @return string
      */
-    public static function russianPluralForm($howmuch, array $input)
+    public static function russianPluralForm(int|float $count, array $input): string
     {
-        $howmuch = (int)$howmuch;
-        $l2 = substr($howmuch, -2);
-        $l1 = substr($howmuch, -1);
+        $count = (int)$count;
+        $l2 = substr($count, -2);
+        $l1 = substr($count, -1);
         if ($l2 > 10 && $l2 < 20) {
             return $input[0];
         } else {

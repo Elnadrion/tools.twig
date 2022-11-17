@@ -12,7 +12,7 @@ use Twig\Extension\GlobalsInterface as TwigGlobalsInterface;
  */
 class PhpGlobalsExtension extends TwigAbstractExtension implements TwigGlobalsInterface
 {
-    public function getName()
+    public function getName(): string
     {
         return 'php_globals_extension';
     }

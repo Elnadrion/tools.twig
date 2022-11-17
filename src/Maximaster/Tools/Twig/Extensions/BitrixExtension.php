@@ -14,9 +14,9 @@ use Twig\TwigFunction;
  */
 class BitrixExtension extends TwigAbstractExtension implements TwigGlobalsInterface
 {
-    private $isD7 = null;
+    private ?bool $isD7 = null;
 
-    public function getName()
+    public function getName(): string
     {
         return 'bitrix_extension';
     }
@@ -38,7 +38,7 @@ class BitrixExtension extends TwigAbstractExtension implements TwigGlobalsInterf
         return $coreVariables;
     }
 
-    private function isD7()
+    private function isD7(): bool
     {
         if ($this->isD7 === null) {
             $this->isD7 = class_exists('\Bitrix\Main\Application');
@@ -50,7 +50,7 @@ class BitrixExtension extends TwigAbstractExtension implements TwigGlobalsInterf
     /**
      * @return TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('showError', 'ShowError'),
@@ -70,7 +70,7 @@ class BitrixExtension extends TwigAbstractExtension implements TwigGlobalsInterf
      * @param \CBitrixComponent $parentComponent
      * @param array $arFunctionParams
      */
-    public static function showComponent($componentName, $componentTemplate, $arParams = [], $parentComponent = null, $arFunctionParams = [])
+    public static function showComponent($componentName, $componentTemplate, $arParams = [], $parentComponent = null, $arFunctionParams = []): void
     {
         global $APPLICATION;
         $APPLICATION->IncludeComponent($componentName, $componentTemplate, $arParams, $parentComponent, $arFunctionParams);
