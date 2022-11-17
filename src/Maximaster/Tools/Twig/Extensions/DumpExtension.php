@@ -8,7 +8,7 @@ use Twig\TwigFunction;
 
 class DumpExtension extends TwigAbstractExtension implements TwigGlobalsInterface
 {
-    public function getName()
+    public function getName(): string
     {
         return 'elnadrion_twig_dump_extension';
     }
