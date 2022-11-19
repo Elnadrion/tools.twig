@@ -13,10 +13,10 @@ use Twig\Template;
  */
 class BitrixLoader extends TwigFilesystemLoader implements TwigLoaderInterface
 {
-    /** @var array Статическое хранилище для уже отрезолвленных путей для ускорения */
-    private static $resolved = [];
-    /** @var array Статическое хранилище нормализованных имен шаблонов для ускорения */
-    private static $normalized = [];
+    /** Статическое хранилище для уже отрезолвленных путей для ускорения */
+    private static array $resolved = [];
+    /** Статическое хранилище нормализованных имен шаблонов для ускорения */
+    private static array $normalized = [];
 
     /**
      * {@inheritdoc}
@@ -24,15 +24,14 @@ class BitrixLoader extends TwigFilesystemLoader implements TwigLoaderInterface
      * Принимает на вход имя компонента и шаблона в виде<br>
      * <b>vendor:componentname[:template[:specifictemplatefile]]</b><br>
      * Например bitrix:news.list:.default, или bitrix:sale.order:show:step1
-     *
-     * @param string $name
      */
-    public function getSource($name)
+
+    public function getSource(string $name): string
     {
         return file_get_contents($this->getSourcePath($name));
     }
 
-    protected function findTemplate(string $name, bool $throw = true)
+    protected function findTemplate(string $name, bool $throw = true): string
     {
         return $this->getSourcePath($name);
     }
@@ -49,7 +48,7 @@ class BitrixLoader extends TwigFilesystemLoader implements TwigLoaderInterface
      * Метод используется только в режиме разработки или при использовании опции auto_reload = true
      * @param string $name Путь к шаблону
      * @param int    $time Время изменения закешированного шаблона
-     * @return bool Актуален ли закешированный шаблон
+     * @return bool  Актуален ли закешированный шаблон
      */
     public function isFresh(string $name, int $time): bool
     {
@@ -59,11 +58,9 @@ class BitrixLoader extends TwigFilesystemLoader implements TwigLoaderInterface
     /**
      * Получает путь до файла с шаблоном по его имени
      *
-     * @param string $name
-     * @return string
      * @throws TwigLoaderError
      */
-    public function getSourcePath($name)
+    public function getSourcePath(string $name): string
     {
         $name = $this->normalizeName($name);
 
@@ -72,7 +69,7 @@ class BitrixLoader extends TwigFilesystemLoader implements TwigLoaderInterface
         }
 
         $resolved = '';
-        if (strpos($name, ':') !== false) {
+        if (str_contains($name, ':')) {
             $resolved = $this->getComponentTemplatePath($name);
         } elseif (($firstChar = substr($name, 0, 1)) === DIRECTORY_SEPARATOR) {
             $resolved = is_file($name) ? $name : $_SERVER['DOCUMENT_ROOT'] . $name;
@@ -85,14 +82,12 @@ class BitrixLoader extends TwigFilesystemLoader implements TwigLoaderInterface
         return static::$resolved[ $name ] = $resolved;
     }
 
-    protected function getLastRenderedTemplate()
+    protected function getLastRenderedTemplate(): false|string
     {
         $trace = debug_backtrace();
         foreach ($trace as $point) {
             if (isset($point['object']) && ($obj = $point['object']) instanceof Template) {
-                /**
-                 * @var Template $obj
-                 */
+                /** @var Template $obj */
                 return $obj->getSourceContext()->getPath();
             }
         }
@@ -102,15 +97,12 @@ class BitrixLoader extends TwigFilesystemLoader implements TwigLoaderInterface
 
     /**
      * По Битрикс-имени шаблона возвращает путь к его файлу
-     *
-     * @param string $name
-     * @return string
      */
-    private function getComponentTemplatePath($name)
+    private function getComponentTemplatePath(string $name): string
     {
         $name = $this->normalizeName($name);
 
-        list($namespace, $component, $template, $page) = explode(':', $name);
+        list($siteTemplate, $namespace, $component, $template, $page) = explode(':', $name);
 
         // Относительный путь, например: vendor:component:template:inc/area.twig
         $isRelative = $page !== basename($page);
@@ -127,6 +119,7 @@ class BitrixLoader extends TwigFilesystemLoader implements TwigLoaderInterface
         $componentName = "{$namespace}:{$component}";
 
         $component = new \CBitrixComponent();
+        $component->setSiteTemplateId($siteTemplate);
         $component->InitComponent($componentName, $template);
         if (!$isRelative) {
             $component->__templatePage = $page;
@@ -134,20 +127,16 @@ class BitrixLoader extends TwigFilesystemLoader implements TwigLoaderInterface
 
         $obTemplate = new \CBitrixComponentTemplate();
         $obTemplate->Init($component);
-        $templatePath = $_SERVER['DOCUMENT_ROOT'] . (
-            $isRelative ? ($obTemplate->GetFolder() . DIRECTORY_SEPARATOR . $page) : $obTemplate->GetFile()
-        );
 
-        return $templatePath;
+        return $_SERVER['DOCUMENT_ROOT'] . (
+            $isRelative ? ($obTemplate->GetFolder() . DIRECTORY_SEPARATOR . $page) : $obTemplate->GetFile()
+            );
     }
 
     /**
      * На основании шаблона компонента создает полное имя для Twig
-     *
-     * @param \CBitrixComponentTemplate $template
-     * @return string
      */
-    public function makeComponentTemplateName(\CBitrixComponentTemplate $template)
+    public function makeComponentTemplateName(\CBitrixComponentTemplate $template): string
     {
         if ($template->__fileAlt) {
             return $template->__fileAlt;
@@ -159,34 +148,32 @@ class BitrixLoader extends TwigFilesystemLoader implements TwigLoaderInterface
             return $template->__file;
         }
 
+        $siteTemplateName = $template->__siteTemplate;
         $templatePage = $template->__page;
         $templateName = $template->__name;
         $componentName = $component->getName();
 
-        return "{$componentName}:{$templateName}:{$templatePage}";
+        return "{$siteTemplateName}:{$componentName}:{$templateName}:{$templatePage}";
     }
 
     /**
      * Преобразует имя в максимально-полное начертание
-     *
-     * @param string $name
-     * @return string
      */
-    public function normalizeName($name)
+    public function normalizeName(string $name): string
     {
-        if (strpos($name, DIRECTORY_SEPARATOR) !== false) {
+        if (str_contains($name, DIRECTORY_SEPARATOR)) {
             $name = preg_replace('#/{2,}#', '/', str_replace('\\', '/', $name));
         }
 
-        $isComponentPath = strpos($name, ':') !== false;
-        $isGlobalPath = substr($name, 0, 1) === '/';
+        $isComponentPath = str_contains($name, ':');
+        $isGlobalPath = str_starts_with($name, '/');
 
         if (($isComponentPath || $isGlobalPath) && isset(static::$normalized[ $name ])) {
             return static::$normalized[ $name ];
         }
 
         if ($isComponentPath) {
-            list($namespace, $component, $template, $file) = explode(':', $name);
+            list($siteTemplate, $namespace, $component, $template, $file) = explode(':', $name);
 
             if (strlen($template) === 0) {
                 $template = '.default';
@@ -196,7 +183,7 @@ class BitrixLoader extends TwigFilesystemLoader implements TwigLoaderInterface
                 $file = 'template';
             }
 
-            $normalizedName = "{$namespace}:{$component}:{$template}:{$file}";
+            $normalizedName = "{$siteTemplate}:{$namespace}:{$component}:{$template}:{$file}";
         } elseif ($isGlobalPath) {
             $normalizedName = $name;
         } else {
