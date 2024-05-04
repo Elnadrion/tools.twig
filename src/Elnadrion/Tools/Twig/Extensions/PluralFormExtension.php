@@ -21,7 +21,7 @@ class PluralFormExtension extends TwigAbstractExtension implements TwigGlobalsIn
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('russianPluralForm', [$this, 'russianPluralForm']),
+            new TwigFunction('russianPluralForm', $this->russianPluralForm(...)),
         ];
     }
 
@@ -30,7 +30,6 @@ class PluralFormExtension extends TwigAbstractExtension implements TwigGlobalsIn
      *
      * @param int|float $count Число, для которого нужно сформировать множественную форму (число будет приведено к целому)
      * @param string[] $input Массив, содержащий 3 слова ['билетов', 'билет', 'билета'] (Ноль билетов, Один билет, Два билета)
-     * @return string
      */
     public static function russianPluralForm(int|float $count, array $input): string
     {
@@ -40,16 +39,11 @@ class PluralFormExtension extends TwigAbstractExtension implements TwigGlobalsIn
         if ($l2 > 10 && $l2 < 20) {
             return $input[0];
         } else {
-            switch ($l1) {
-                case 1:
-                    return $input[1];
-                case 2:
-                case 3:
-                case 4:
-                    return $input[2];
-                default:
-                    return $input[0];
-            }
+            return match ($l1) {
+                1 => $input[1],
+                2, 3, 4 => $input[2],
+                default => $input[0],
+            };
         }
     }
 }

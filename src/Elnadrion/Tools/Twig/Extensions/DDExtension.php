@@ -21,7 +21,7 @@ class DDExtension extends TwigAbstractExtension implements TwigGlobalsInterface
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('dd', [$this, 'dd']),
+            new TwigFunction('dd', $this->dd(...)),
         ];
     }
 

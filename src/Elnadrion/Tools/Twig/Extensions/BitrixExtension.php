@@ -59,7 +59,7 @@ class BitrixExtension extends TwigAbstractExtension implements TwigGlobalsInterf
             new TwigFunction('bitrix_sessid_post', 'bitrix_sessid_post'),
             new TwigFunction('bitrix_sessid_get', 'bitrix_sessid_get'),
             new TwigFunction('getMessage', $this->isD7() ? '\\Bitrix\\Main\\Localization\\Loc::getMessage' : 'GetMessage'),
-            new TwigFunction('showComponent', [__CLASS__, 'showComponent']),
+            new TwigFunction('showComponent', self::showComponent(...)),
         ];
     }
 

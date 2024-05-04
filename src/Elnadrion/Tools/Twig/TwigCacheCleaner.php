@@ -11,25 +11,20 @@ use Twig\Environment as TwigEnvironment;
  */
 class TwigCacheCleaner
 {
-    protected $engine;
-
-    public function __construct(TwigEnvironment $engine)
+    public function __construct(protected TwigEnvironment $engine)
     {
-        $this->engine = $engine;
         $this->checkCacheEngine();
     }
 
     /**
      * Проверяет, является ли кеш файловым, просто на основании существования директории с кешем
-     *
-     * @return bool
      */
-    private function isFileCache()
+    private function isFileCache(): bool
     {
         return is_dir($this->engine->getCache(true));
     }
 
-    private function checkCacheEngine()
+    private function checkCacheEngine(): void
     {
         if (!$this->isFileCache()) {
             throw new \LogicException('Невозможно очистить кеш. Он либо хранится не в файлах, либо кеш отсутствует полностью');
@@ -43,7 +38,7 @@ class TwigCacheCleaner
      * @return int Количество удаленных файлов кеша
      * @throws ArgumentException
      */
-    public function clearByName($name)
+    public function clearByName(string $name): int
     {
         if (strlen($name) === 0) {
             throw new ArgumentException('Имя шаблона не задано');
@@ -76,7 +71,7 @@ class TwigCacheCleaner
      *
      * @return int Количество удаленных файлов кеша
      */
-    public function clearAll()
+    public function clearAll(): int
     {
         $counter = 0;
 

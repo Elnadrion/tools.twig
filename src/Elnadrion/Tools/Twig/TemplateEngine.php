@@ -16,33 +16,26 @@ use Twig\Error\Error as TwigError;
  */
 class TemplateEngine
 {
-    /**
-     * @var Twig\Environment
-     */
-    private $engine;
+    private TwigEnvironment $engine;
 
-    /**
-     * @var TwigOptionsStorage
-     */
-    private $options;
+    private readonly TwigOptionsStorage $options;
 
     /**
      * Возвращает настроенный инстанс движка Twig
-     * @return Twig\Environment
      */
-    public function getEngine()
+    public function getEngine(): TwigEnvironment
     {
         return $this->engine;
     }
 
-    private static $instance = null;
+    private static ?self $instance = null;
 
     /**
      * Очищает весь кеш твига
      *
      * @deprecated начиная с 0.8. Будет удален в 1.0
      */
-    public static function clearAllCache()
+    public static function clearAllCache(): int
     {
         $cleaner = new TwigCacheCleaner(self::getInstance()->getEngine());
         return $cleaner->clearAll();
@@ -66,7 +59,7 @@ class TemplateEngine
     /**
      * Инициализируется расширения, необходимые для работы
      */
-    private function initExtensions()
+    private function initExtensions(): void
     {
         $this->engine->addExtension(new Extensions\BitrixExtension());
         $this->engine->addExtension(new Extensions\PhpGlobalsExtension());
@@ -78,7 +71,7 @@ class TemplateEngine
     /**
      * Создается событие для внесения в Twig изменения из проекта
      */
-    private function generateInitEvent()
+    private function generateInitEvent(): void
     {
         $eventName = 'onAfterTwigTemplateEngineInited';
         $event = new Event('', $eventName, ['engine' => $this->engine]);
@@ -100,7 +93,7 @@ class TemplateEngine
         }
     }
 
-    public static function getInstance()
+    public static function getInstance(): self
     {
         return self::$instance ?: (self::$instance = new self());
     }
@@ -108,26 +101,18 @@ class TemplateEngine
     /**
      * Собственно сама функция - рендерер. Принимает все данные о шаблоне и компоненте, выводит в stdout данные.
      * Содержит дополнительную обработку для component_epilog.php
-     *
-     * @param string $templateFile
-     * @param array $arResult
-     * @param array $arParams
-     * @param array $arLangMessages
-     * @param string $templateFolder
-     * @param string $parentTemplateFolder
-     * @param CBitrixComponentTemplate $template
      * @throws Twig\Error\Error
      */
     public static function render(
         /** @noinspection PhpUnusedParameterInspection */
-        $templateFile,
-        $arResult,
-        $arParams,
-        $arLangMessages,
-        $templateFolder,
-        $parentTemplateFolder,
+        string $templateFile,
+        array $arResult,
+        array $arParams,
+        array $arLangMessages,
+        string $templateFolder,
+        string $parentTemplateFolder,
         CBitrixComponentTemplate $template
-    ) {
+    ): void {
         if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
             throw new TwigError('Пролог не подключен');
         }
@@ -158,7 +143,7 @@ class TemplateEngine
         // Кроме того, Битрикс ждёт такое же имя файла, внутри lang-папки. Т.е. например template.twig
         // Но сам includ'ит их, что в случае twig файла конечно никак не сработает. Поэтому подменяем имя
         $templateMess = Loc::loadLanguageFile(
-            $_SERVER['DOCUMENT_ROOT'] . preg_replace('/[.]twig$/', '.php', $template->GetFile())
+            $_SERVER['DOCUMENT_ROOT'] . preg_replace('/[.]twig$/', '.php', (string) $template->GetFile())
         );
 
         // Это не обязательно делать если не используется lang, т.к. Битрикс загруженные фразы все равно запомнил
@@ -194,26 +179,21 @@ class TemplateEngine
 
     /**
      * Рендерит произвольный twig-файл, возвращает результат в виде строки
-     * @param string $src Путь к twig-файлу
-     * @param array $context Контекст
-     * @return string Результат рендера
      */
-    public static function renderStandalone($src, $context = [])
+    public static function renderStandalone(string $src, array $context = []): string
     {
         return self::getInstance()->getEngine()->render($src, $context);
     }
 
     /**
      * Рендерит произвольный twig-файл, выводит результат в stdout
-     * @param string $src
-     * @param array $context
      */
-    public static function displayStandalone($src, $context = [])
+    public static function displayStandalone(string $src, array $context = []): void
     {
         echo self::renderStandalone($src, $context);
     }
 
-    public function getOptions()
+    public function getOptions(): TwigOptionsStorage
     {
         return $this->options;
     }

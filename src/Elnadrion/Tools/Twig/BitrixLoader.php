@@ -164,8 +164,8 @@ class BitrixLoader extends TwigFilesystemLoader implements TwigLoaderInterface
             $name = preg_replace('#/{2,}#', '/', str_replace('\\', '/', $name));
         }
 
-        $isComponentPath = str_contains($name, ':');
-        $isGlobalPath = str_starts_with($name, '/');
+        $isComponentPath = str_contains((string) $name, ':');
+        $isGlobalPath = str_starts_with((string) $name, '/');
 
         if (($isComponentPath || $isGlobalPath) && isset(static::$normalized[ $name ])) {
             return static::$normalized[ $name ];

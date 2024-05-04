@@ -14,7 +14,7 @@ class RenderTest extends PHPUnit_Framework_TestCase
 
     public const EXPECTED = 'abcd';
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         if (empty($_SERVER['DOCUMENT_ROOT'])) {
             if (!$_SERVER['DOCUMENT_ROOT'] = self::getDocumentRoot()) {
@@ -42,7 +42,7 @@ class RenderTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         if (empty($_SERVER['DOCUMENT_ROOT'])) {
             return;
@@ -52,7 +52,7 @@ class RenderTest extends PHPUnit_Framework_TestCase
         array_map('rmdir', array_merge($tmpDirs, glob($tmpDirs[0] . '/*')));
     }
 
-    protected static function getDocumentRoot()
+    protected static function getDocumentRoot(): string
     {
         do {
             $documentRoot = strstr(__DIR__, 'bitrix', true);
@@ -91,7 +91,7 @@ class RenderTest extends PHPUnit_Framework_TestCase
      * @param $component
      * @param $template
      */
-    public function testRenderComponent($component, $template, $additionalContext = [])
+    public function testRenderComponent($component, $template, $additionalContext = []): void
     {
         global $APPLICATION;
         ob_start();
@@ -101,7 +101,10 @@ class RenderTest extends PHPUnit_Framework_TestCase
         $this->assertSame(self::EXPECTED, $output);
     }
 
-    public function componentsDataProvider()
+    /**
+     * @return string[][]
+     */
+    public function componentsDataProvider(): array
     {
         $data = [];
         $list = glob($this->getTestComponentTemplatesPath() . '/*');
@@ -117,19 +120,21 @@ class RenderTest extends PHPUnit_Framework_TestCase
     /**
      * Проверяет рендер отдельных файлов
      * @dataProvider standaloneTemplatesDataProvider
-     * @param string $src
      */
-    public function testRenderStandalone($src, $context = [])
+    public function testRenderStandalone(string $src, $context = []): void
     {
         $this->assertSame(self::EXPECTED, TemplateEngine::renderStandalone($src, $context));
     }
 
-    public function standaloneTemplatesDataProvider()
+    /**
+     * @return string[][]
+     */
+    public function standaloneTemplatesDataProvider(): array
     {
         $data = [];
         foreach (glob($this->getTestComponentTemplatesPath() . '/*') as $template) {
             // standalone не имеют контекста
-            if (strpos($template, 'component') !== false || strpos($template, 'result') !== false) {
+            if (str_contains($template, 'component') || str_contains($template, 'result')) {
                 continue;
             }
             $data[] = [is_dir($template) ? $template . '/template.twig' : $template];
@@ -137,12 +142,12 @@ class RenderTest extends PHPUnit_Framework_TestCase
         return $data;
     }
 
-    protected function getTestComponentTemplatesPath()
+    protected function getTestComponentTemplatesPath(): string
     {
         return __DIR__ . '/resources/' . self::TEST_COMPONENT_NAME . '/templates';
     }
 
-    public function testRenderComponentWithExtractResult()
+    public function testRenderComponentWithExtractResult(): void
     {
         $engine = TemplateEngine::getInstance();
         $options = $engine->getOptions();

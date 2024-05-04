@@ -21,7 +21,7 @@ class DumpExtension extends TwigAbstractExtension implements TwigGlobalsInterfac
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('dump', [$this, 'dump']),
+            new TwigFunction('dump', $this->dump(...)),
         ];
     }
 
