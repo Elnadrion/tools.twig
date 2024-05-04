@@ -130,7 +130,7 @@ class BitrixLoader extends TwigFilesystemLoader implements TwigLoaderInterface
 
         return $_SERVER['DOCUMENT_ROOT'] . (
             $isRelative ? ($obTemplate->GetFolder() . DIRECTORY_SEPARATOR . $page) : $obTemplate->GetFile()
-            );
+        );
     }
 
     /**

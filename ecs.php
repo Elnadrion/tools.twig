@@ -12,27 +12,21 @@ use Symplify\EasyCodingStandard\Config\ECSConfig;
 use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
 
 return static function (ECSConfig $ecsConfig): void {
-    $services = $ecsConfig->services();
+    $ecsConfig->rules([
+        OrderedTraitsFixer::class,
+        SingleQuoteFixer::class,
+        NoExtraBlankLinesFixer::class,
+        SingleTraitInsertPerStatementFixer::class,
+    ]);
 
-    $services->set(OrderedTraitsFixer::class);
-    $services->set(SingleQuoteFixer::class);
-    $services->set(NoExtraBlankLinesFixer::class);
-    $services->set(SingleTraitInsertPerStatementFixer::class);
-
-    $services->set(YodaStyleFixer::class)
-        ->call('configure', [
-            [
-                'equal' => false,
-                'identical' => false,
-                'less_and_greater' => false,
-            ],
-        ]);
-    $services->set(TrailingCommaInMultilineFixer::class)
-        ->call('configure', [
-            [
-                'elements' => ['arrays'],
-            ],
-        ]);
+    $ecsConfig->ruleWithConfiguration(YodaStyleFixer::class, [
+        'equal' => false,
+        'identical' => false,
+        'less_and_greater' => false,
+    ]);
+    $ecsConfig->ruleWithConfiguration(TrailingCommaInMultilineFixer::class, [
+        'elements' => ['arrays'],
+    ]);
 
     $ecsConfig->paths([
         __DIR__ . '/src',

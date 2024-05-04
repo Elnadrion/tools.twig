@@ -5,11 +5,9 @@ on:
   push:
     branches:
       - main
-      - master
   pull_request:
     branches:
       - main
-      - master
 
 jobs:
   ecs-check:
@@ -26,11 +24,10 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php_version }}
-          ini-values: short_open_tag=On
           coverage: none
 
       - name: install dependencies
-        run: composer install
+        run: composer install --no-progress --no-suggest --no-interaction
 
       - name: check code style
-        run: php vendor/bin/ecs check
+        run: ./vendor/bin/ecs check
