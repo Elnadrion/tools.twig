@@ -2,32 +2,28 @@
 name: Check code style
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    - push
+    - pull_request
 
 jobs:
-  ecs-check:
-    runs-on: ubuntu-latest
+    ecs-check:
+        runs-on: ubuntu-latest
 
-    strategy:
-      fail-fast: false
-      matrix:
-        php_version: [ '7.4' ]
+        strategy:
+            fail-fast: false
+            matrix:
+                php: [7.4]
 
-    steps:
-      - uses: actions/checkout@v2
+        steps:
+            -   uses: actions/checkout@v4
 
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php_version }}
-          coverage: none
+            -   uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php }}
+                    coverage: none
 
-      - name: install dependencies
-        run: composer install --no-progress --no-suggest --no-interaction
+            -   name: install dependencies
+                run: composer install --no-progress --no-interaction
 
-      - name: check code style
-        run: ./vendor/bin/ecs check
+            -   name: check code style
+                run: ./vendor/bin/ecs check
