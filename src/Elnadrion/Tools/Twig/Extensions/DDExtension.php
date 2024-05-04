@@ -1,16 +1,16 @@
 <?php
 
-namespace Maximaster\Tools\Twig\Extensions;
+namespace Elnadrion\Tools\Twig\Extensions;
 
 use Twig\Extension\AbstractExtension as TwigAbstractExtension;
 use Twig\Extension\GlobalsInterface as TwigGlobalsInterface;
 use Twig\TwigFunction;
 
-class DumpExtension extends TwigAbstractExtension implements TwigGlobalsInterface
+class DDExtension extends TwigAbstractExtension implements TwigGlobalsInterface
 {
     public function getName(): string
     {
-        return 'elnadrion_twig_dump_extension';
+        return 'elnadrion_twig_dd_extension';
     }
 
     public function getGlobals(): array
@@ -21,14 +21,14 @@ class DumpExtension extends TwigAbstractExtension implements TwigGlobalsInterfac
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('dump', [$this, 'dump']),
+            new TwigFunction('dd', [$this, 'dd']),
         ];
     }
 
-    public static function dump(mixed ...$data): void
+    public static function dd(mixed ...$data): void
     {
-        if (!function_exists('dd')) {
-            dump(...$data);
+        if (function_exists('dd')) {
+            dd(...$data);
         }
     }
 }

@@ -6,15 +6,15 @@
 `vendor:component_name[:template[:specific_template_file]]`
 
 , где
-* **vendor** - это пространство имен разработчика, например `bitrix` или `maximaster`
+* **vendor** - это пространство имен разработчика, например `bitrix` или `elnadrion`
 * **component_name** - имя компонента, шаблон которого наследуется
 * **template** - имя шаблона, который нужно унаследовать. Необязательный, по-умолчанию `.default`
 * **specific_template_file** - путь к файлу относительно папки шаблона. Необязательный, по-умолчанию `template`
 
-Например, вы хотите унаследовать шаблон new-year компонента `maximaster:product`. Для этого в шаблоне twig нужно написать 
+Например, вы хотите унаследовать шаблон new-year компонента `elnadrion:product`. Для этого в шаблоне twig нужно написать 
 
 ```twig
-{% extends "maximaster:product:new-year" %}
+{% extends "elnadrion:product:new-year" %}
 ```
 
 Данный синтаксис работает во всех конструкциях, которые подключают файлы шаблонов.

@@ -1,15 +1,15 @@
 <?php
 
-namespace Maximaster\Tools\Twig\Test;
+namespace Elnadrion\Tools\Twig\Test;
 
+use Elnadrion\Tools\Twig\TemplateEngine;
+use Elnadrion\Tools\Twig\TwigCacheCleaner;
 use Exception;
-use Maximaster\Tools\Twig\TemplateEngine;
-use Maximaster\Tools\Twig\TwigCacheCleaner;
 use PHPUnit_Framework_TestCase;
 
 class RenderTest extends PHPUnit_Framework_TestCase
 {
-    public const TEST_VENDOR_NAME = '__phpunit_maximaster';
+    public const TEST_VENDOR_NAME = '__phpunit_elnadrion';
     public const TEST_COMPONENT_NAME = 'tools.twig';
 
     public const EXPECTED = 'abcd';
@@ -24,7 +24,7 @@ class RenderTest extends PHPUnit_Framework_TestCase
 
         // При подключении Битрикс очистит arCustomTemplateEngines, нужно будет заполнить его повторно
         include_once $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_before.php';
-        maximasterRegisterTwigTemplateEngine();
+        elnadrionRegisterTwigTemplateEngine();
 
         (new TwigCacheCleaner(TemplateEngine::getInstance()->getEngine()))->clearAll();
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Maximaster\Tools\Twig;
+namespace Elnadrion\Tools\Twig;
 
 use Bitrix\Main\Event;
 use Bitrix\Main\EventResult;
@@ -12,7 +12,7 @@ use Twig\Error\Error as TwigError;
 /**
  * Class TemplateEngine. Небольшой синглтон, который позволяет в процессе работы страницы несколько раз обращаться к
  * одному и тому же рендереру страниц
- * @package Maximaster\Twig
+ * @package Elnadrion\Twig
  */
 class TemplateEngine
 {
@@ -137,7 +137,7 @@ class TemplateEngine
         $loader = self::getInstance()->getEngine()->getLoader();
         if (!($loader instanceof BitrixLoader)) {
             throw new \LogicException(
-                "Загрузчиком должен быть 'Maximaster\\Tools\\Twig\\BitrixLoader' или его наследник"
+                "Загрузчиком должен быть 'Elnadrion\\Tools\\Twig\\BitrixLoader' или его наследник"
             );
         }
 

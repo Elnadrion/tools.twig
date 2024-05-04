@@ -1,13 +1,13 @@
 <?php
 
-namespace Maximaster\Tools\Twig;
+namespace Elnadrion\Tools\Twig;
 
 use Bitrix\Main\ArgumentException;
 use Twig\Environment as TwigEnvironment;
 
 /**
  * Класс, который берет на себя очистку кеша твига
- * @package Maximaster\Tools\Twig
+ * @package Elnadrion\Tools\Twig
  */
 class TwigCacheCleaner
 {

@@ -1,11 +1,11 @@
 <?php
 
-use Maximaster\Tools\Twig\TemplateEngine;
-use Maximaster\Tools\Twig\TwigOptionsStorage;
+use Elnadrion\Tools\Twig\TemplateEngine;
+use Elnadrion\Tools\Twig\TwigOptionsStorage;
 use Twig\Error\LoaderError as TwigLoaderError;
 
-if (!function_exists('maximasterRenderTwigTemplate')) {
-    function maximasterRenderTwigTemplate(
+if (!function_exists('elnadrionRenderTwigTemplate')) {
+    function elnadrionRenderTwigTemplate(
         $templateFile,
         $arResult,
         $arParams,
@@ -25,7 +25,7 @@ if (!function_exists('maximasterRenderTwigTemplate')) {
         );
     }
 
-    function maximasterRegisterTwigTemplateEngine(): void
+    function elnadrionRegisterTwigTemplateEngine(): void
     {
         if (!class_exists('CMain')) {
             return;
@@ -36,12 +36,12 @@ if (!function_exists('maximasterRenderTwigTemplate')) {
         global $arCustomTemplateEngines;
         $arCustomTemplateEngines['twig'] = [
             'templateExt' => ['twig'],
-            'function' => 'maximasterRenderTwigTemplate',
+            'function' => 'elnadrionRenderTwigTemplate',
             'sort' => $options->getUsedByDefault() ? 1 : 500,
         ];
     }
 
-    maximasterRegisterTwigTemplateEngine();
+    elnadrionRegisterTwigTemplateEngine();
 } else {
-    throw new TwigLoaderError('Необходимо, чтобы функция с именем maximasterRenderTwigTemplate не была определена');
+    throw new TwigLoaderError('Необходимо, чтобы функция с именем elnadrionRenderTwigTemplate не была определена');
 }

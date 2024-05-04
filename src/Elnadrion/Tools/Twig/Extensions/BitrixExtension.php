@@ -1,6 +1,6 @@
 <?php
 
-namespace Maximaster\Tools\Twig\Extensions;
+namespace Elnadrion\Tools\Twig\Extensions;
 
 use Bitrix\Main\Application;
 use Twig\Extension\AbstractExtension as TwigAbstractExtension;
@@ -10,7 +10,7 @@ use Twig\TwigFunction;
 /**
  * Class BitrixExtension. Расширение, которое позволяет в шаблонах использовать типичные для битрикса конструкции
  *
- * @package Maximaster\Twig
+ * @package Elnadrion\Twig
  */
 class BitrixExtension extends TwigAbstractExtension implements TwigGlobalsInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Maximaster\Tools\Twig\Extensions;
+namespace Elnadrion\Tools\Twig\Extensions;
 
 use Twig\Extension\AbstractExtension as TwigAbstractExtension;
 use Twig\Extension\GlobalsInterface as TwigGlobalsInterface;
@@ -8,7 +8,7 @@ use Twig\Extension\GlobalsInterface as TwigGlobalsInterface;
 /**
  * Class BitrixExtension. Расширение, которое добавляет глобалки php в шаблоны
  *
- * @package Maximaster\Twig
+ * @package Elnadrion\Twig
  */
 class PhpGlobalsExtension extends TwigAbstractExtension implements TwigGlobalsInterface
 {

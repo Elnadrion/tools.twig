@@ -1,12 +1,12 @@
 <?php
 
-namespace Maximaster\Tools\Twig;
+namespace Elnadrion\Tools\Twig;
 
 use Bitrix\Main\Config\Configuration;
 
 /**
  * Класс для более удобного способа доступа к настрокам twig
- * @package Maximaster\Tools\Twig
+ * @package Elnadrion\Tools\Twig
  */
 class TwigOptionsStorage implements \ArrayAccess
 {
@@ -22,7 +22,7 @@ class TwigOptionsStorage implements \ArrayAccess
         return [
             'debug' => false,
             'charset' => SITE_CHARSET,
-            'cache' => $_SERVER['DOCUMENT_ROOT'] . '/bitrix/cache/maximaster/tools.twig',
+            'cache' => $_SERVER['DOCUMENT_ROOT'] . '/bitrix/cache/elnadrion/tools.twig',
             'auto_reload' => isset($_GET['clear_cache']) && strtoupper($_GET['clear_cache']) == 'Y',
             'autoescape' => false,
             'extract_result' => false,
@@ -33,7 +33,7 @@ class TwigOptionsStorage implements \ArrayAccess
     public function getOptions(): array
     {
         $c = Configuration::getInstance();
-        $config = $c->get('maximaster');
+        $config = $c->get('elnadrion');
         $twigConfig = isset($config['tools']['twig']) ? (array)$config['tools']['twig'] : [];
         $this->options = array_merge($this->getDefaultOptions(), $twigConfig);
         return $this->options;

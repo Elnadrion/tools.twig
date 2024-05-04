@@ -1,6 +1,6 @@
 <?php
 
-namespace Maximaster\Tools\Twig\Extensions;
+namespace Elnadrion\Tools\Twig\Extensions;
 
 use Twig\Extension\AbstractExtension as TwigAbstractExtension;
 use Twig\Extension\GlobalsInterface as TwigGlobalsInterface;
@@ -10,7 +10,7 @@ class PluralFormExtension extends TwigAbstractExtension implements TwigGlobalsIn
 {
     public function getName(): string
     {
-        return 'maximaster_functions_extension';
+        return 'elnadrion_functions_extension';
     }
 
     public function getGlobals(): array

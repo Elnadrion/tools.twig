@@ -1,10 +1,10 @@
 ## Управление настройками
 
-Библиотека конфигурируется с помощью файла /bitrix/.settings.php (или /bitrix/.settings_extra.php). Нужно завести в этом файле опцию maximaster, и оперировать значением tools->twig. Ниже описаны значения опций, которые заданы библиотекой по-умолчанию:
+Библиотека конфигурируется с помощью файла /bitrix/.settings.php (или /bitrix/.settings_extra.php). Нужно завести в этом файле опцию elnadrion, и оперировать значением tools->twig. Ниже описаны значения опций, которые заданы библиотекой по-умолчанию:
 
 ```php
 //...
-'maximaster' => [
+'elnadrion' => [
     'value' => [
         'tools' => [
             'twig' => [
@@ -15,7 +15,7 @@
                 'charset' => 'UTF-8',
     
                 //кеш хранится в уникальной директории. Должен быть полный абсолютный путь
-                'cache' => $_SERVER['DOCUMENT_ROOT'] . '/bitrix/cache/maximaster/tools.twig',
+                'cache' => $_SERVER['DOCUMENT_ROOT'] . '/bitrix/cache/elnadrion/tools.twig',
     
                 //Автообновление включается только в момент очистки кеша
                 'auto_reload' => isset($_GET['clear_cache']) && strtoupper($_GET['clear_cache']) == 'Y',

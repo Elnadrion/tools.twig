@@ -18,15 +18,15 @@
     "require-dev": {
         "phpunit/phpunit": "^5.7",
         "symfony/var-dumper": "^5.0|^6.0|^7.0",
-        "symplify/easy-coding-standard": "^12.1.14"
+        "symplify/easy-coding-standard": "^12.0"
     },
     "autoload": {
         "psr-4": {
-            "Maximaster\\": "src/Maximaster/",
-            "Maximaster\\Tools\\Twig\\Test\\": "tests/"
+            "Elnadrion\\": "src/Elnadrion/",
+            "Elnadrion\\Tools\\Twig\\Test\\": "tests/"
         },
         "files": [
-            "src/Maximaster/functions.php"
+            "src/Elnadrion/functions.php"
         ]
     },
     "scripts": {

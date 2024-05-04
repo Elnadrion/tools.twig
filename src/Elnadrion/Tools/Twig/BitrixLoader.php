@@ -1,6 +1,6 @@
 <?php
 
-namespace Maximaster\Tools\Twig;
+namespace Elnadrion\Tools\Twig;
 
 use Twig\Error\LoaderError as TwigLoaderError;
 use Twig\Loader\FilesystemLoader as TwigFilesystemLoader;
@@ -9,7 +9,7 @@ use Twig\Template;
 
 /**
  * Class BitrixLoader. Класс загрузчик файлов шаблонов. Понимает специализированный синтаксис
- * @package Maximaster\Twig
+ * @package Elnadrion\Twig
  */
 class BitrixLoader extends TwigFilesystemLoader implements TwigLoaderInterface
 {
