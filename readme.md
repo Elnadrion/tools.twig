@@ -20,7 +20,7 @@ composer require elnadrion/tools.twig
 ## Требования
 
 * Битрикс: >=20.5.393
-* PHP: >=7.2.5
+* PHP: >=8.1
 * mbstring.func_overload: 0
 
 ## Документация 

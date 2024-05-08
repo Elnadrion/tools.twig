@@ -5,22 +5,6 @@
 Пример обработчика события, который зарегистрирует свое расширение:
 
 ```php
-use Bitrix\Main\EventResult;
-use Twig\Environment;
-
-AddEventHandler('', 'onAfterTwigTemplateEngineInited', ['EventClass', 'addTwigExtension']);
-
-class EventClass
-{
-    public static function addTwigExtension(Environment $engine): EventResult
-    {
-        $engine->addExtension(new MySuperDuperExtension());
-        return new EventResult(EventResult::SUCCESS, [$engine];
-    }
-}
-```
-Пример на D7:
-```php
 use Bitrix\Main\Event;
 use Bitrix\Main\EventResult;
 use Bitrix\Main\EventManager;
