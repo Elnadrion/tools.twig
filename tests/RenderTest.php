@@ -5,6 +5,7 @@ namespace Elnadrion\Tools\Twig\Test;
 use Elnadrion\Tools\Twig\TemplateEngine;
 use Elnadrion\Tools\Twig\TwigCacheCleaner;
 use Exception;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class RenderTest extends TestCase
@@ -45,10 +46,8 @@ class RenderTest extends TestCase
 
     /**
      * Проверяет рендер компонентов
-     * @dataProvider componentsDataProvider
-     * @param $component
-     * @param $template
      */
+    #[DataProvider('componentsDataProvider')]
     public function testRenderComponent($component, $template, $additionalContext = []): void
     {
         global $APPLICATION;
@@ -77,8 +76,8 @@ class RenderTest extends TestCase
 
     /**
      * Проверяет рендер отдельных файлов
-     * @dataProvider standaloneTemplatesDataProvider
      */
+    #[DataProvider('standaloneTemplatesDataProvider')]
     public function testRenderStandalone(string $src, $context = []): void
     {
         $this->assertSame(self::EXPECTED, TemplateEngine::renderStandalone($src, $context));
