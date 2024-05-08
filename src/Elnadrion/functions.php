@@ -18,14 +18,14 @@ if (!function_exists('elnadrionRenderTwigTemplate')) {
             $templateFile,
             $arResult,
             $arParams,
-            $arLangMessages,
+            $arLangMessages ?? [],
             $templateFolder,
             $parentTemplateFolder,
             $template
         );
     }
 
-    function elnadrionRegisterTwigTemplateEngine(): void
+    function registerTwigTemplateEngine(): void
     {
         if (!class_exists('CMain')) {
             return;
@@ -41,7 +41,7 @@ if (!function_exists('elnadrionRenderTwigTemplate')) {
         ];
     }
 
-    elnadrionRegisterTwigTemplateEngine();
+    registerTwigTemplateEngine();
 } else {
-    throw new TwigLoaderError('Необходимо, чтобы функция с именем elnadrionRenderTwigTemplate не была определена');
+    throw new TwigLoaderError('Необходимо, чтобы функция с именем registerTwigTemplateEngine не была определена');
 }

@@ -5,27 +5,18 @@ namespace Elnadrion\Tools\Twig\Test;
 use Elnadrion\Tools\Twig\TemplateEngine;
 use Elnadrion\Tools\Twig\TwigCacheCleaner;
 use Exception;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class RenderTest extends PHPUnit_Framework_TestCase
+class RenderTest extends TestCase
 {
-    public const TEST_VENDOR_NAME = '__phpunit_elnadrion';
+    public const TEST_VENDOR_NAME = '__phpunit_twig';
     public const TEST_COMPONENT_NAME = 'tools.twig';
 
     public const EXPECTED = 'abcd';
 
-    public static function setUpBeforeClass(): void
+    public function setUp(): void
     {
-        if (empty($_SERVER['DOCUMENT_ROOT'])) {
-            if (!$_SERVER['DOCUMENT_ROOT'] = self::getDocumentRoot()) {
-                throw new Exception("Can't find DOCUMENT_ROOT");
-            }
-        }
-
-        // При подключении Битрикс очистит arCustomTemplateEngines, нужно будет заполнить его повторно
-        include_once $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_before.php';
-        elnadrionRegisterTwigTemplateEngine();
-
+        registerTwigTemplateEngine();
         (new TwigCacheCleaner(TemplateEngine::getInstance()->getEngine()))->clearAll();
 
         $componentsDir = $_SERVER['DOCUMENT_ROOT'] . '/bitrix/components';
@@ -50,39 +41,6 @@ class RenderTest extends PHPUnit_Framework_TestCase
 
         $tmpDirs = [$_SERVER['DOCUMENT_ROOT'] . '/bitrix/components/' . self::TEST_VENDOR_NAME];
         array_map('rmdir', array_merge($tmpDirs, glob($tmpDirs[0] . '/*')));
-    }
-
-    protected static function getDocumentRoot(): string
-    {
-        do {
-            $documentRoot = strstr(__DIR__, 'bitrix', true);
-            if ($documentRoot) {
-                break;
-            }
-
-            $localRoot = strstr(__DIR__, 'local/vendor', true);
-            if ($localRoot) {
-                $documentRoot = $localRoot . '/../';
-                break;
-            }
-
-            $dir = realpath(__DIR__ . '/../../../../');
-
-            $innerCandidates = ['', 'htdocs', 'public_html'];
-
-            do {
-                $candidates = preg_replace('/^/', $dir . '/', $innerCandidates);
-
-                foreach ($candidates as $candidateDir) {
-                    if (is_dir($bitrixDir = $candidateDir . '/bitrix')) {
-                        $documentRoot = $candidateDir;
-                        break 3;
-                    }
-                }
-            } while ($dir = realpath($dir . '/../'));
-        } while (false);
-
-        return rtrim($documentRoot, '/');
     }
 
     /**
