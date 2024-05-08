@@ -164,8 +164,8 @@ class BitrixLoader extends TwigFilesystemLoader implements TwigLoaderInterface
             $name = preg_replace('#/{2,}#', '/', str_replace('\\', '/', $name));
         }
 
-        $isComponentPath = str_contains((string) $name, ':');
-        $isGlobalPath = str_starts_with((string) $name, '/');
+        $isComponentPath = str_contains((string)$name, ':');
+        $isGlobalPath = str_starts_with((string)$name, '/');
 
         if (($isComponentPath || $isGlobalPath) && isset(static::$normalized[ $name ])) {
             return static::$normalized[ $name ];
@@ -174,11 +174,11 @@ class BitrixLoader extends TwigFilesystemLoader implements TwigLoaderInterface
         if ($isComponentPath) {
             [$siteTemplate, $namespace, $component, $template, $file] = explode(':', (string) $name);
 
-            if (strlen($template) === 0) {
+            if (empty($template)) {
                 $template = '.default';
             }
 
-            if (strlen($file) === 0) {
+            if (empty($file)) {
                 $file = 'template';
             }
 
@@ -187,13 +187,9 @@ class BitrixLoader extends TwigFilesystemLoader implements TwigLoaderInterface
             $normalizedName = $name;
         } else {
             $lastRendered = $this->getLastRenderedTemplate();
-            if ($lastRendered) {
-                $normalizedName = dirname($lastRendered) . '/' . $name;
-            } else {
-                $normalizedName = $name;
-            }
+            $normalizedName = $lastRendered ? dirname($lastRendered) . '/' . $name : $name;
         }
 
-        return static::$normalized[ $name ] = $normalizedName;
+        return static::$normalized[$name] = $normalizedName;
     }
 }

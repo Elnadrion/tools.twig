@@ -52,7 +52,7 @@ class RenderTest extends TestCase
     {
         global $APPLICATION;
         ob_start();
-        $APPLICATION->IncludeComponent($component, $template, compact('additionalContext'));
+        $APPLICATION->IncludeComponent($component, $template, ['additionalContext' => $additionalContext]);
         $output = ob_get_clean();
 
         $this->assertSame(self::EXPECTED, $output);

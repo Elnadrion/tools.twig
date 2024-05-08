@@ -40,14 +40,14 @@ class TwigCacheCleaner
      */
     public function clearByName(string $name): int
     {
-        if (strlen($name) === 0) {
+        if (empty($name)) {
             throw new ArgumentException('Имя шаблона не задано');
         }
 
         $counter = 0;
 
         $templateClass = $this->engine->getTemplateClass($name);
-        if (strlen($name) === 0) {
+        if (empty($name)) {
             throw new ArgumentException("Шаблон с именем '{$name}' не найден");
         }
 

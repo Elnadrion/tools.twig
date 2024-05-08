@@ -23,7 +23,7 @@ class TwigOptionsStorage implements \ArrayAccess
             'debug' => false,
             'charset' => 'UTF-8',
             'cache' => $_SERVER['DOCUMENT_ROOT'] . '/bitrix/cache/elnadrion/tools.twig',
-            'auto_reload' => isset($_GET['clear_cache']) && strtoupper((string)$_GET['clear_cache']) == 'Y',
+            'auto_reload' => isset($_GET['clear_cache']) && strtoupper((string)$_GET['clear_cache']) === 'Y',
             'autoescape' => false,
             'extract_result' => false,
             'use_by_default' => false,
@@ -85,7 +85,7 @@ class TwigOptionsStorage implements \ArrayAccess
 
     public function setExtractResult($value): TwigOptionsStorage
     {
-        $this->options['extract_result'] = !!$value;
+        $this->options['extract_result'] = (bool)$value;
         return $this;
     }
 

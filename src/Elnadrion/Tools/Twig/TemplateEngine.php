@@ -159,7 +159,7 @@ class TemplateEngine
             'component' => $component,
             'templateFolder' => $templateFolder,
             'parentTemplateFolder' => $parentTemplateFolder,
-            'render' => compact('templateName', 'engine'),
+            'render' => ['templateName' => $templateName, 'engine' => $engine],
         ] + $context;
 
         echo self::getInstance()->getEngine()->render($templateName, $context);
