@@ -20,10 +20,10 @@ composer require elnadrion/tools.twig
 ## Требования
 
 * Битрикс: >=20.5.393
-* PHP: >=8.1
+* PHP: >=8.2
 * mbstring.func_overload: 0
 
-## Документация 
+## Документация
 
 * **[Синтаксис подключения шаблонов](docs/syntax.md)**
 * **[Доступные переменные и функции внутри шаблонов](docs/twig_extension.md)**
