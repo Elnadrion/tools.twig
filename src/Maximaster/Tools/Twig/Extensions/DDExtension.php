@@ -28,7 +28,7 @@ class DDExtension extends TwigAbstractExtension implements TwigGlobalsInterface
     public static function dd(mixed ...$data): void
     {
         if (function_exists('dd')) {
-            dd($data);
+            dd(...$data);
         }
     }
 }

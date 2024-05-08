@@ -28,7 +28,7 @@ class DumpExtension extends TwigAbstractExtension implements TwigGlobalsInterfac
     public static function dump(mixed ...$data): void
     {
         if (!function_exists('dd')) {
-            dump($data);
+            dump(...$data);
         }
     }
 }
