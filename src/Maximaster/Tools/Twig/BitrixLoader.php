@@ -25,7 +25,6 @@ class BitrixLoader extends TwigFilesystemLoader implements TwigLoaderInterface
      * <b>vendor:componentname[:template[:specifictemplatefile]]</b><br>
      * Например bitrix:news.list:.default, или bitrix:sale.order:show:step1
      */
-
     public function getSource(string $name): string
     {
         return file_get_contents($this->getSourcePath($name));
@@ -102,7 +101,7 @@ class BitrixLoader extends TwigFilesystemLoader implements TwigLoaderInterface
     {
         $name = $this->normalizeName($name);
 
-        list($siteTemplate, $namespace, $component, $template, $page) = explode(':', $name);
+        [$siteTemplate, $namespace, $component, $template, $page] = explode(':', $name);
 
         // Относительный путь, например: vendor:component:template:inc/area.twig
         $isRelative = $page !== basename($page);
@@ -173,7 +172,7 @@ class BitrixLoader extends TwigFilesystemLoader implements TwigLoaderInterface
         }
 
         if ($isComponentPath) {
-            list($siteTemplate, $namespace, $component, $template, $file) = explode(':', $name);
+            [$siteTemplate, $namespace, $component, $template, $file] = explode(':', (string) $name);
 
             if (strlen($template) === 0) {
                 $template = '.default';
