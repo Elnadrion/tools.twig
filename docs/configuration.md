@@ -4,32 +4,28 @@
 
 ```php
 //...
-'elnadrion' => [
+'tools.twig' => [
     'value' => [
-        'tools' => [
-            'twig' => [
-                //Режим отладки выключен
-                'debug' => false,
-    
-                //Кодировка продукта
-                'charset' => 'UTF-8',
-    
-                //кеш хранится в уникальной директории. Должен быть полный абсолютный путь
-                'cache' => $_SERVER['DOCUMENT_ROOT'] . '/bitrix/cache/elnadrion/tools.twig',
-    
-                //Автообновление включается только в момент очистки кеша
-                'auto_reload' => isset($_GET['clear_cache']) && strtoupper($_GET['clear_cache']) == 'Y',
-    
-                //Автоэскейп отключен, т.к. битрикс по-умолчанию его сам делает
-                'autoescape' => false,
-                
-                //Переменные arResult будут доступны не в result, а напрямую
-                'extract_result' => false,
-                
-                //Подключать шаблоны .twig в приоритете над шаблонами .php
-                'use_by_default' => false
-            ]
-        ]
+        //Режим отладки выключен
+        'debug' => false,
+
+        //Кодировка продукта
+        'charset' => 'UTF-8',
+
+        //кеш хранится в уникальной директории. Должен быть полный абсолютный путь
+        'cache' => $_SERVER['DOCUMENT_ROOT'] . '/bitrix/cache/elnadrion/tools.twig',
+
+        //Автообновление включается только в момент очистки кеша
+        'auto_reload' => isset($_GET['clear_cache']) && strtoupper($_GET['clear_cache']) == 'Y',
+
+        //Автоэскейп отключен, т.к. битрикс по-умолчанию его сам делает
+        'autoescape' => false,
+        
+        //Переменные arResult будут доступны не в result, а напрямую
+        'extract_result' => false,
+        
+        //Подключать шаблоны .twig в приоритете над шаблонами .php
+        'use_by_default' => false
     ]
 ]
 //...

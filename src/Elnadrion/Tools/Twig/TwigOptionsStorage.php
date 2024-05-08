@@ -21,9 +21,9 @@ class TwigOptionsStorage implements \ArrayAccess
     {
         return [
             'debug' => false,
-            'charset' => SITE_CHARSET,
+            'charset' => 'UTF-8',
             'cache' => $_SERVER['DOCUMENT_ROOT'] . '/bitrix/cache/elnadrion/tools.twig',
-            'auto_reload' => isset($_GET['clear_cache']) && strtoupper((string) $_GET['clear_cache']) == 'Y',
+            'auto_reload' => isset($_GET['clear_cache']) && strtoupper((string)$_GET['clear_cache']) == 'Y',
             'autoescape' => false,
             'extract_result' => false,
             'use_by_default' => false,
@@ -33,8 +33,12 @@ class TwigOptionsStorage implements \ArrayAccess
     public function getOptions(): array
     {
         $c = Configuration::getInstance();
-        $config = $c->get('elnadrion');
-        $twigConfig = isset($config['tools']['twig']) ? (array)$config['tools']['twig'] : [];
+        $twigConfig = $c->get('tools.twig');
+
+        if (empty($twigConfig) || !is_array($twigConfig)) {
+            $twigConfig = [];
+        }
+
         $this->options = array_merge($this->getDefaultOptions(), $twigConfig);
         return $this->options;
     }
@@ -90,18 +94,17 @@ class TwigOptionsStorage implements \ArrayAccess
         return isset($this->options[$offset]);
     }
 
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->options[$offset];
     }
 
-    public function offsetSet($offset, $value): TwigOptionsStorage
+    public function offsetSet($offset, $value): void
     {
         $this->options[ $offset ] = $value;
-        return $this;
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
     }
 }
