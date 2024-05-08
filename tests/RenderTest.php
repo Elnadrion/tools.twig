@@ -62,10 +62,10 @@ class RenderTest extends TestCase
     /**
      * @return string[][]
      */
-    public function componentsDataProvider(): array
+    public static function componentsDataProvider(): array
     {
         $data = [];
-        $list = glob($this->getTestComponentTemplatesPath() . '/*');
+        $list = glob(static::getTestComponentTemplatesPath() . '/*');
         sort($list);
 
         foreach ($list as $template) {
@@ -87,10 +87,10 @@ class RenderTest extends TestCase
     /**
      * @return string[][]
      */
-    public function standaloneTemplatesDataProvider(): array
+    public static function standaloneTemplatesDataProvider(): array
     {
         $data = [];
-        foreach (glob($this->getTestComponentTemplatesPath() . '/*') as $template) {
+        foreach (glob(static::getTestComponentTemplatesPath() . '/*') as $template) {
             // standalone не имеют контекста
             if (str_contains($template, 'component') || str_contains($template, 'result')) {
                 continue;
@@ -100,7 +100,7 @@ class RenderTest extends TestCase
         return $data;
     }
 
-    protected function getTestComponentTemplatesPath(): string
+    protected static function getTestComponentTemplatesPath(): string
     {
         return __DIR__ . '/resources/' . self::TEST_COMPONENT_NAME . '/templates';
     }
