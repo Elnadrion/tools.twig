@@ -28,11 +28,11 @@ class PluralFormExtension extends TwigAbstractExtension implements TwigGlobalsIn
     /**
      * Выводит правильный вариант множественной формы числа
      *
-     * @param int $n Число, для которого нужно сформировать множественную форму
-     * @param string[] $forms Массив, содержащий 3 слова ['билетов', 'билет', 'билета'] (Ноль билетов, Один билет, Два билета)
+     * @param int $n - число
+     * @param string[] $words - формы слова (элемент, элемента, элементов)
      */
-    public static function russianPluralForm(int $n, array $forms): string
+    public static function russianPluralForm(int $n, array $words): string
     {
-        return $n % 10 == 1 && $n % 100 != 11 ? $forms[0] : ($n % 10 >= 2 && $n % 10 <= 4 && ($n % 100 < 10 || $n % 100 >= 20) ? $forms[1] : $forms[2]);
+        return $n % 10 == 1 && $n % 100 != 11 ? $words[0] : ($n % 10 >= 2 && $n % 10 <= 4 && ($n % 100 < 10 || $n % 100 >= 20) ? $words[1] : $words[2]);
     }
 }

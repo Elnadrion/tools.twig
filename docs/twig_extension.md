@@ -40,15 +40,14 @@
 
 ```twig
  {% set ticketsCount = 21 %}
- {{ russianPluralForm(ticketsCount, ['билетов', 'билет', 'билета']) }}
+ {{ russianPluralForm(ticketsCount, ['билет', 'билета', 'билетов']) }}
 ```
 
 Порядок словоформ запомнить достаточно просто: 0 билетов, 1 билет, 2 билета. Для большинства слов такой порядок будет работать корректно.
 
 #### dd / dump
 
-Функции из пакета  [symfony/var-dumper](https://github.com/symfony/var-dumper)
-
+Функции из пакета  [symfony/var-dumper](https://github.com/symfony/var-dumper) (если он установлен)
 
 ```twig
 dd($array)
