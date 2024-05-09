@@ -16,7 +16,7 @@
         'cache' => $_SERVER['DOCUMENT_ROOT'] . '/bitrix/cache/elnadrion/tools.twig',
 
         //Автообновление включается только в момент очистки кеша
-        'auto_reload' => isset($_GET['clear_cache']) && strtoupper($_GET['clear_cache']) == 'Y',
+        'auto_reload' => isset($_GET['clear_cache']) && strtoupper($_GET['clear_cache']) === 'Y',
 
         //Автоэскейп отключен, т.к. битрикс по-умолчанию его сам делает
         'autoescape' => false,
@@ -25,9 +25,9 @@
         'extract_result' => false,
         
         //Подключать шаблоны .twig в приоритете над шаблонами .php
-        'use_by_default' => false
+        'use_by_default' => false,
     ]
 ]
 //...
 ```
-При выборе значений для конфигов нужно опираться на [документацию twig по настройкам Twig_Environment](http://twig.sensiolabs.org/doc/api.html#environment-options). Поддерживаются все возможные согласно этой документации опции
+При выборе значений для конфигов нужно опираться на [документацию twig по настройкам Twig_Environment](https://twig.symfony.com/doc/3.x/api.html#environment-options). Поддерживаются все возможные согласно этой документации опции
