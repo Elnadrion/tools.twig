@@ -30,17 +30,6 @@ class TemplateEngine
 
     private static ?self $instance = null;
 
-    /**
-     * Очищает весь кеш твига
-     *
-     * @deprecated начиная с 0.8. Будет удален в 1.0
-     */
-    public static function clearAllCache(): int
-    {
-        $cleaner = new TwigCacheCleaner(self::getInstance()->getEngine());
-        return $cleaner->clearAll();
-    }
-
     public function __construct()
     {
         $this->options = new TwigOptionsStorage();

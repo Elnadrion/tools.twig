@@ -1,6 +1,10 @@
 <?php
 
+use Bitrix\Main\Context;
+use Bitrix\Main\Engine\CurrentUser;
+use Bitrix\Main\EventManager;
 use Elnadrion\Tools\Twig\TemplateEngine;
+use Elnadrion\Tools\Twig\TwigCacheCleaner;
 use Elnadrion\Tools\Twig\TwigOptionsStorage;
 use Twig\Error\LoaderError as TwigLoaderError;
 
@@ -44,4 +48,26 @@ if (!function_exists('elnadrionRenderTwigTemplate')) {
     registerTwigTemplateEngine();
 } else {
     throw new TwigLoaderError('Необходимо, чтобы функция с именем registerTwigTemplateEngine не была определена');
+}
+
+if (class_exists(EventManager::class)) {
+    EventManager::getInstance()->addEventHandler('main', 'onProlog', 'clearTwigCache');
+
+    function clearTwigCache(): void
+    {
+        $request = Context::getCurrent()->getRequest();
+
+        if (
+            $request->getRequestedPage() !== '/bitrix/admin/cache.php' ||
+            $request->get('clearcache') !== 'Y' ||
+            !$request->isPost() ||
+            !in_array($request->get('cachetype'), ['all', 'html']) ||
+            !check_bitrix_sessid() ||
+            !CurrentUser::get()->isAdmin()
+        ) {
+            return;
+        }
+
+        (new TwigCacheCleaner(TemplateEngine::getInstance()->getEngine()))->clearAll();
+    }
 }
