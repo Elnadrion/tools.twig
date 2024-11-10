@@ -118,14 +118,8 @@ class TemplateEngine
         $templateName = $loader->makeComponentTemplateName($template);
 
         $engine = self::getInstance();
-        $options = $engine->getOptions();
 
-        if ($options['extract_result']) {
-            $context = $arResult;
-            $context['result'] = &$arResult;
-        } else {
-            $context = ['result' => $arResult];
-        }
+        $context = ['result' => $arResult];
 
         // Битрикс не умеет "лениво" грузить языковые сообщения если они запрашиваются из twig, т.к. ищет вызов
         // GetMessage, а после ищет рядом lang-папки. Т.к. рядом с кешем их конечно нет

@@ -103,18 +103,4 @@ class RenderTest extends TestCase
     {
         return __DIR__ . '/resources/' . self::TEST_COMPONENT_NAME . '/templates';
     }
-
-    public function testRenderComponentWithExtractResult(): void
-    {
-        $engine = TemplateEngine::getInstance();
-        $options = $engine->getOptions();
-        $extractResult = $options->getExtractResult();
-        $options->setExtractResult(true);
-
-        $this->testRenderComponent(self::TEST_VENDOR_NAME . ':' . self::TEST_COMPONENT_NAME, 'print.result', [
-            'extractResultRequired' => true,
-        ]);
-
-        $options->setExtractResult($extractResult);
-    }
 }

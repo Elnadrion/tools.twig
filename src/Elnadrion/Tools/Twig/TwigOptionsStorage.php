@@ -12,6 +12,13 @@ class TwigOptionsStorage implements \ArrayAccess
 {
     private array $options = [];
 
+    private array $configurableKeys = [
+        'debug',
+        'charset',
+        'cache',
+        'use_by_default',
+    ];
+
     public function __construct()
     {
         $this->getOptions();
@@ -37,6 +44,8 @@ class TwigOptionsStorage implements \ArrayAccess
 
         if (empty($twigConfig) || !is_array($twigConfig)) {
             $twigConfig = [];
+        } else {
+            $twigConfig = array_intersect_key($twigConfig, array_flip($this->configurableKeys));
         }
 
         $this->options = array_merge($this->getDefaultOptions(), $twigConfig);
@@ -81,12 +90,6 @@ class TwigOptionsStorage implements \ArrayAccess
     public function getUsedByDefault(): bool
     {
         return (bool)$this->options['use_by_default'];
-    }
-
-    public function setExtractResult($value): TwigOptionsStorage
-    {
-        $this->options['extract_result'] = (bool)$value;
-        return $this;
     }
 
     public function offsetExists($offset): bool
