@@ -3,6 +3,7 @@
 namespace Elnadrion\Tools\Twig;
 
 use Bitrix\Main\ArgumentException;
+use Elnadrion\Tools\Twig\Exceptions\CacheDisabledException;
 use Twig\Environment as TwigEnvironment;
 
 /**
@@ -27,7 +28,7 @@ class TwigCacheCleaner
     private function checkCacheEngine(): void
     {
         if (!$this->isFileCache()) {
-            throw new \LogicException('Невозможно очистить кеш. Он либо хранится не в файлах, либо кеш отсутствует полностью');
+            throw new CacheDisabledException('Невозможно очистить кеш. Он либо хранится не в файлах, либо кеш отсутствует полностью');
         }
     }
 
