@@ -3,6 +3,7 @@
 use Bitrix\Main\Context;
 use Bitrix\Main\Engine\CurrentUser;
 use Bitrix\Main\EventManager;
+use Elnadrion\Tools\Twig\Exceptions\CacheDisabledException;
 use Elnadrion\Tools\Twig\TemplateEngine;
 use Elnadrion\Tools\Twig\TwigCacheCleaner;
 use Elnadrion\Tools\Twig\TwigOptionsStorage;
@@ -68,6 +69,9 @@ if (class_exists(EventManager::class)) {
             return;
         }
 
-        (new TwigCacheCleaner(TemplateEngine::getInstance()->getEngine()))->clearAll();
+        try {
+            (new TwigCacheCleaner(TemplateEngine::getInstance()->getEngine()))->clearAll();
+        } catch (CacheDisabledException) {
+        }
     }
 }
